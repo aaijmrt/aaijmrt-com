@@ -1,0 +1,72 @@
+# ----------------------------------------
+# 0. Enable completion system
+# ----------------------------------------
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' special-dirs false
+setopt AUTO_LIST
+setopt LIST_AMBIGUOUS
+
+
+# ----------------------------------------
+# 1. Custom PATHs
+# ----------------------------------------
+# Example adding a custom tool path (e.g., Maven)
+export PATH=$PATH:/path/to/your/apache-maven-3.9.9/bin # [REDACTED_PATH] Original path included user-specific directory
+
+# ----------------------------------------
+# 2. Oh My Zsh setup
+# ----------------------------------------
+export ZSH="$HOME/.oh-my-zsh"
+
+# Plugins to enable
+plugins=(
+  git
+  fzf
+  z
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# ----------------------------------------
+# 3. Starship prompt (must come after Oh My Zsh)
+# ----------------------------------------
+eval "$(starship init zsh)"
+
+# ----------------------------------------
+# 4. fzf keybindings and completions
+# ----------------------------------------
+# Ensure fzf is installed, e.g., via brew install fzf
+source <(fzf --zsh)
+
+# ----------------------------------------
+# 5. Auto cd: type folder name to `cd` into it
+# ----------------------------------------
+setopt AUTO_CD
+
+# ----------------------------------------
+# 6. Autosuggestions (gray ghost text)
+# Requires: `brew install zsh-autosuggestions`
+# ----------------------------------------
+# Adjust path if installed differently
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^F' autosuggest-accept
+
+# ----------------------------------------
+# 7. Syntax highlighting (colored commands)
+# Requires: `brew install zsh-syntax-highlighting`
+# ----------------------------------------
+# Adjust path if installed differently
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ----------------------------------------
+# 8. Use Nerd Font for icons and nice prompt visuals
+# Make sure your terminal font is set to JetBrainsMono Nerd Font
+# ----------------------------------------
+export STARSHIP_CONFIG=~/.config/starship.toml 
